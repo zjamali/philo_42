@@ -6,7 +6,7 @@
 /*   By: zjamali <zjamali@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/13 14:12:21 by zjamali           #+#    #+#             */
-/*   Updated: 2021/09/17 14:03:24 by zjamali          ###   ########.fr       */
+/*   Updated: 2021/09/17 15:00:55 by zjamali          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 #define TIME_TO_DIE 410
 #define TIME_TO_EAT 200
 #define TIME_TO_SLEEP 200
-#define TIMES_TO_EAT 8
+#define TIMES_TO_EAT 10
 
 typedef struct s_simulation t_simulation;
 
@@ -80,7 +80,7 @@ void *watch_philo_routine(void *philo_data)
 		}
 		//pthread_mutex_unlock(&philo->limit_lock);
 		pthread_mutex_unlock(&philo->is_eating);
-		usleep(500);
+		usleep(100);
 	}
 	return (NULL);
 }
@@ -98,13 +98,8 @@ void *philo_routine(void *philo_data)
 		pthread_create(&philo_watcher, NULL, watch_philo_routine, philo);
 		pthread_detach(philo_watcher);
 	}
-	while (philo->is_live)
+	while (philo->is_live && philo->eating_times)
 	{
-		// begin thinking
-		pthread_mutex_lock(&message);
-		printf("%ld\t%d\t\033[0;33m THINKING \033[0m\n", (get_current_time() - simulation->start_time), philo->philo_id);
-		pthread_mutex_unlock(&message);
-
 		// taking forks
 		pthread_mutex_lock(&forks[philo->philo_id - 1]);
 		philo->right_hand = 1;
@@ -122,12 +117,14 @@ void *philo_routine(void *philo_data)
 		philo->limit = get_current_time() + philo->time_to_die;
 		pthread_mutex_lock(&message);
 		printf("%ld\t%d\t\033[0;32m EATING \033[0m\n", get_current_time() - simulation->start_time, philo->philo_id);
-		//pthread_mutex_lock(&philo->limit_lock);
-		//pthread_mutex_unlock(&philo->limit_lock);
 		pthread_mutex_unlock(&message);
 		usleep(philo->time_to_eat * 1000);
 		pthread_mutex_unlock(&philo->is_eating);
-		//// stop eating
+		if (philo->is_times_to_eat)
+			philo->eating_times--;
+		else
+			philo->eating_times = 1;
+		// stop eating
 
 		// droping forks
 		pthread_mutex_unlock(&forks[philo->philo_id - 1]);
@@ -139,6 +136,11 @@ void *philo_routine(void *philo_data)
 		printf("%ld\t%d\t\033[0;34m SLEEPING \033[0m\n", get_current_time() - simulation->start_time, philo->philo_id);
 		pthread_mutex_unlock(&message);
 		usleep(philo->time_to_sleep * 1000);
+
+		// begin thinking
+		pthread_mutex_lock(&message);
+		printf("%ld\t%d\t\033[0;33m THINKING \033[0m\n", (get_current_time() - simulation->start_time), philo->philo_id);
+		pthread_mutex_unlock(&message);
 	}
 	//pthread_mutex_lock(&message);
 	//printf("%ld\t%d\t\033[0;31m DIE \033[0m\n", get_current_time() - simulation->start_time, philo->philo_id);
