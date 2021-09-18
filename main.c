@@ -6,7 +6,7 @@
 /*   By: zjamali <zjamali@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/13 14:12:21 by zjamali           #+#    #+#             */
-/*   Updated: 2021/09/18 19:51:45 by zjamali          ###   ########.fr       */
+/*   Updated: 2021/09/18 20:03:25 by zjamali          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ long	get_current_time(void)
 void	print_to_terminal(char *output, t_simulation *simulation, int philo_id,
 					   int is_philo_die)
 {
-	usleep(10);
 	pthread_mutex_lock(&simulation->message);
 	if (is_philo_die)
 	{
@@ -47,10 +46,8 @@ void	philo_taken_forks(t_philo *current_philo)
 	philo = current_philo;
 	simulation = philo->simulation;
 
-	usleep(10);
 	pthread_mutex_lock(&simulation->forks[philo->philo_id - 1]);
 	print_to_terminal("\t taken fork\n", simulation, philo->philo_id, 0);
-	usleep(10);
 	pthread_mutex_lock(
 		&simulation->forks[philo->philo_id % simulation->number_of_philos]);
 	print_to_terminal("\t taken fork\n", simulation, philo->philo_id, 0);
@@ -63,7 +60,6 @@ void	philo_is_eating(t_philo *current_philo)
 
 	philo = current_philo;
 	simulation = philo->simulation;
-	usleep(10);
 	pthread_mutex_lock(&philo->is_eating);
 	philo->limit = get_current_time() + philo->time_to_die;
 	print_to_terminal("\t\033[0;32m EATING \033[0m\n", simulation,
@@ -104,7 +100,7 @@ void	*watch_philo_routine(void *philo_data)
 				philo->philo_id, 1);
 		}
 		pthread_mutex_unlock(&philo->is_eating);
-		usleep(100);
+		usleep(1000);
 	}
 	return (NULL);
 }
@@ -272,7 +268,7 @@ int	main(int ac, char **av)
 			pthread_create(&philos_threads[i], NULL,
 				philo_routine, &philos_data[i]);
 			pthread_detach(philos_threads[i]);
-			usleep(100);
+			usleep(10);
 			i++;
 		}
 		destroy_simulation(simulation, philos_data);
