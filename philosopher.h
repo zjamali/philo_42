@@ -6,7 +6,7 @@
 /*   By: zjamali <zjamali@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/17 17:54:01 by zjamali           #+#    #+#             */
-/*   Updated: 2021/09/17 18:53:22 by zjamali          ###   ########.fr       */
+/*   Updated: 2021/09/18 17:55:10 by zjamali          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,8 @@
 # include <stdio.h>
 # include <unistd.h>
 # include <sys/time.h>
-# define NUMBER_OF_PHILOS 4
-# define TIME_TO_DIE 410
-# define TIME_TO_EAT 200
-# define TIME_TO_SLEEP 200
-# define TIMES_TO_EAT 10
+# include <limits.h>
+# include <stdlib.h>
 
 typedef struct s_simulation	t_simulation;
 
@@ -43,9 +40,18 @@ typedef struct s_philo_data
 
 struct s_simulation
 {
+	int				number_of_philos;
 	long			start_time;
-	t_philo			*philo;
-	pthread_mutex_t	forks[NUMBER_OF_PHILOS];
+
+	//t_philo			*philo;
+	int				time_to_die;
+	int				time_to_eat;
+	int				eating_times;
+	int				time_to_sleep;
+	int				is_times_to_eat;
+
+	//pthread_mutex_t	forks[NUMBER_OF_PHILOS];
+	pthread_mutex_t	*forks;
 	pthread_mutex_t	message;
 	pthread_mutex_t	main_lock;
 };
@@ -53,8 +59,6 @@ struct s_simulation
 /*
 * printing function 
 */
-void	ft_putchar_fd(char c, int fd);
-void	ft_putstr_fd(char *s, int fd);
-void	ft_putnbr_fd(int n, int fd);
+int		ft_atoi(const char *str);
 
 #endif
