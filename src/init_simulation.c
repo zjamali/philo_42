@@ -6,7 +6,7 @@
 /*   By: zjamali <zjamali@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/20 09:05:04 by zjamali           #+#    #+#             */
-/*   Updated: 2021/09/20 09:15:55 by zjamali          ###   ########.fr       */
+/*   Updated: 2021/09/20 11:15:45 by zjamali          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,6 @@ t_philo	*init_simaulation_philos(t_simulation *simulation)
 		philos_data[i].is_times_to_eat = simulation->is_times_to_eat;
 		philos_data[i].eating_times = simulation->eating_times;
 		philos_data[i].simulation = simulation;
-		pthread_mutex_init(&philos_data[i].is_eating, NULL);
-		philos_data[i].limit = get_current_time()
-			+ philos_data[i].time_to_die;
 		i++;
 	}
 	return (philos_data);

@@ -18,7 +18,7 @@ OBJ = $(addprefix $(OBJ_DIR)/,$(OBJ_NAME))
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	$(CC) $(OBJ) -o $@
+	$(CC) $(OBJ) -lpthread -o $@
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c $(HEDAERS)
 	@mkdir obj 2> /dev/null || true

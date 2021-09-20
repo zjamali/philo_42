@@ -6,7 +6,7 @@
 /*   By: zjamali <zjamali@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/13 14:12:21 by zjamali           #+#    #+#             */
-/*   Updated: 2021/09/20 09:15:19 by zjamali          ###   ########.fr       */
+/*   Updated: 2021/09/20 12:27:21 by zjamali          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ long	get_current_time(void)
 void	print_to_terminal(char *output, t_simulation *simulation, int philo_id,
 					   int is_philo_die)
 {
+	// printf("message |index = %d|current time %ld\n" ,philo_id , get_current_time());
 	pthread_mutex_lock(&simulation->message);
 	if (is_philo_die)
 	{
@@ -62,6 +63,7 @@ int	main(int ac, char **av)
 	int				i;
 	t_simulation	*simulation;
 	pthread_t		*philos_threads;
+	pthread_t		*philo_watcher;
 	t_philo			*philos_data;
 
 	i = 0;
@@ -72,13 +74,20 @@ int	main(int ac, char **av)
 		philos_data = init_simaulation_philos(simulation);
 		philos_threads = (pthread_t *)malloc(sizeof(pthread_t)
 				* simulation->number_of_philos);
+		philo_watcher = (pthread_t *)malloc(sizeof(pthread_t)
+				* simulation->number_of_philos);
 		while (i < simulation->number_of_philos)
 		{
+			philos_data[i].limit = get_current_time()
+				+ simulation->time_to_die;
+			pthread_create(&philo_watcher[i], NULL,
+				watch_philo_routine, &philos_data[i]);
+			pthread_detach(philo_watcher[i]);
 			pthread_create(&philos_threads[i], NULL,
 				philo_routine, &philos_data[i]);
 			pthread_detach(philos_threads[i]);
-			usleep(100);
 			i++;
+			usleep(100);
 		}
 		destroy_simulation(simulation, philos_data);
 	}
