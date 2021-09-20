@@ -6,7 +6,7 @@
 /*   By: zjamali <zjamali@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/20 08:52:24 by zjamali           #+#    #+#             */
-/*   Updated: 2021/09/20 11:43:38 by zjamali          ###   ########.fr       */
+/*   Updated: 2021/09/20 12:45:44 by zjamali          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ void	philo_start_thinking(t_philo *current_philo)
 
 void	*philo_routine(void *philo_data)
 {
-	//pthread_t		philo_watcher;
+	pthread_t		philo_watcher;
 	t_philo			*philo;
 	t_simulation	*simulation;
 
@@ -80,8 +80,8 @@ void	*philo_routine(void *philo_data)
 	
 	//if (philo)
 	//{
-		// pthread_create(&philo_watcher, NULL, watch_philo_routine, philo);
-		// pthread_detach(philo_watcher);
+		pthread_create(&philo_watcher, NULL, watch_philo_routine, philo);
+		pthread_detach(philo_watcher);
 	//}
 	while (philo->eating_times)
 	{
