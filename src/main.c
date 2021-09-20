@@ -6,7 +6,7 @@
 /*   By: zjamali <zjamali@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/13 14:12:21 by zjamali           #+#    #+#             */
-/*   Updated: 2021/09/20 13:10:16 by zjamali          ###   ########.fr       */
+/*   Updated: 2021/09/20 16:53:19 by zjamali          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,17 +38,19 @@ void	print_to_terminal(char *output, t_simulation *simulation, int philo_id,
 	}
 }
 
-void	destroy_simulation(t_simulation *simulation, t_philo *philos_data)
+void	destroy_simulation(t_simulation *simulation, t_philo *philos_data,
+		pthread_t *philos_threads)
 {
-	int	i;
+	int		i;
 
 	i = 0;
 	pthread_mutex_lock(&simulation->main_lock);
 	pthread_mutex_unlock(&simulation->main_lock);
-	pthread_mutex_unlock(&simulation->main_lock);
+	free(philos_threads);
 	while (i < simulation->number_of_philos)
 	{
 		pthread_mutex_destroy(&simulation->forks[i]);
+		free(simulation->forks);
 		i++;
 	}
 	pthread_mutex_destroy(&simulation->main_lock);
@@ -81,7 +83,7 @@ int	main(int ac, char **av)
 			i++;
 			usleep(100);
 		}
-		destroy_simulation(simulation, philos_data);
+		destroy_simulation(simulation, philos_data, philos_threads);
 	}
 	return (0);
 }

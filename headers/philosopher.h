@@ -6,7 +6,7 @@
 /*   By: zjamali <zjamali@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/17 17:54:01 by zjamali           #+#    #+#             */
-/*   Updated: 2021/09/20 15:25:36 by zjamali          ###   ########.fr       */
+/*   Updated: 2021/09/20 16:46:19 by zjamali          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,6 @@ struct s_simulation
 	int				is_times_to_eat;
 
 	pthread_mutex_t	*forks;
-	pthread_t		*philo_watcher;
 	pthread_mutex_t	message;
 	pthread_mutex_t	main_lock;
 };
