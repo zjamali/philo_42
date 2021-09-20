@@ -6,7 +6,7 @@
 /*   By: zjamali <zjamali@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/20 08:47:01 by zjamali           #+#    #+#             */
-/*   Updated: 2021/09/20 09:16:05 by zjamali          ###   ########.fr       */
+/*   Updated: 2021/09/20 15:38:12 by zjamali          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,8 @@ t_simulation	*ft_parse_args(int ac, char **av)
 	{
 		simulation->is_times_to_eat = 1;
 		simulation->eating_times = ft_atoi(av[5]);
+		simulation->eating_times_for_all_philos = simulation->eating_times
+			* simulation->number_of_philos;
 	}
 	else
 	{
