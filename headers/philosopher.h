@@ -6,7 +6,7 @@
 /*   By: zjamali <zjamali@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/17 17:54:01 by zjamali           #+#    #+#             */
-/*   Updated: 2021/09/21 11:29:04 by zjamali          ###   ########.fr       */
+/*   Updated: 2021/09/21 13:20:49 by zjamali          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,27 @@
 # include <stdio.h>
 # include <unistd.h>
 # include <sys/time.h>
-# include <limits.h>
 # include <stdlib.h>
 
-typedef struct s_simulation	t_simulation;
+# define INT_MAX 2147483647
+# define INT_MIN -2147483648
 
+typedef struct s_simulation
+{
+	int				number_of_philos;
+	int				eating_times_for_all_philos;
+	long			start_time;
+
+	int				time_to_die;
+	int				time_to_eat;
+	int				eating_times;
+	int				time_to_sleep;
+	int				is_times_to_eat;
+
+	pthread_mutex_t	*forks;
+	pthread_mutex_t	message;
+	pthread_mutex_t	main_lock;
+}	t_simulation;
 typedef struct s_philo_data
 {
 	int				philo_id;
@@ -37,22 +53,6 @@ typedef struct s_philo_data
 	pthread_mutex_t	is_eating;
 }	t_philo;
 
-struct s_simulation
-{
-	int				number_of_philos;
-	int				eating_times_for_all_philos;
-	long			start_time;
-
-	int				time_to_die;
-	int				time_to_eat;
-	int				eating_times;
-	int				time_to_sleep;
-	int				is_times_to_eat;
-
-	pthread_mutex_t	*forks;
-	pthread_mutex_t	message;
-	pthread_mutex_t	main_lock;
-};
 
 /*
 * libft function 
