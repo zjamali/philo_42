@@ -6,7 +6,7 @@
 /*   By: zjamali <zjamali@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/20 08:53:25 by zjamali           #+#    #+#             */
-/*   Updated: 2021/09/21 13:39:11 by zjamali          ###   ########.fr       */
+/*   Updated: 2021/09/21 13:46:12 by zjamali          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	*watch_philo_routine(void *philo_data)
 				pthread_mutex_unlock(&simulation->main_lock);
 		if (philo->limit < get_current_time())
 		{
-			print_to_terminal("\t\033[0;31m died \033[0m\n", simulation,
+			print_to_terminal("\t\033[0;31mdied \033[0m\n", simulation,
 				philo->philo_id, 1);
 		}
 		pthread_mutex_unlock(&philo->is_eating);

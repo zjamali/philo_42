@@ -6,7 +6,7 @@
 /*   By: zjamali <zjamali@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/13 14:12:21 by zjamali           #+#    #+#             */
-/*   Updated: 2021/09/21 11:47:36 by zjamali          ###   ########.fr       */
+/*   Updated: 2021/09/21 15:09:59 by zjamali          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ int	main(int ac, char **av)
 	t_philo			*philos_data;
 
 	i = 0;
-	if (ac >= 5 && check_args(ac, av))
+	if (check_args(ac, av))
 	{
 		simulation = ft_parse_args(ac, av);
 		if (!simulation)

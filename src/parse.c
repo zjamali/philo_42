@@ -6,7 +6,7 @@
 /*   By: zjamali <zjamali@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/20 08:47:01 by zjamali           #+#    #+#             */
-/*   Updated: 2021/09/21 13:30:08 by zjamali          ###   ########.fr       */
+/*   Updated: 2021/09/21 15:15:48 by zjamali          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ int	check_args(int ac, char **av)
 		}
 		if (num < 60 && i > 1 && i < 5)
 		{
-			printf("error: Do not test with time_to_die or time_to_eat or");
+			printf("error: time_to_die or time_to_eat or");
 			printf("time_to_sleep under 60 ms\n");
 			return (0);
 		}
