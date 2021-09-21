@@ -6,7 +6,7 @@
 /*   By: zjamali <zjamali@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/17 17:54:01 by zjamali           #+#    #+#             */
-/*   Updated: 2021/09/21 13:20:49 by zjamali          ###   ########.fr       */
+/*   Updated: 2021/09/21 15:53:42 by zjamali          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,6 @@ typedef struct s_philo_data
 	t_simulation	*simulation;
 	pthread_mutex_t	is_eating;
 }	t_philo;
-
 
 /*
 * libft function 

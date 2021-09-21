@@ -11,7 +11,9 @@ SRC_NAME = main.c\
 	philo_routine.c\
 	philo_watcher.c\
 	ft_atoi.c\
-	handle_errors.c
+	handle_errors.c\
+	args_check.c
+
 
 OBJ_NAME = $(SRC_NAME:.c=.o)
 HEDAERS = headers/philosopher.h
