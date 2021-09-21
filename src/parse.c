@@ -6,7 +6,7 @@
 /*   By: zjamali <zjamali@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/20 08:47:01 by zjamali           #+#    #+#             */
-/*   Updated: 2021/09/20 15:38:12 by zjamali          ###   ########.fr       */
+/*   Updated: 2021/09/21 11:48:38 by zjamali          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,10 +42,15 @@ t_simulation	*ft_parse_args(int ac, char **av)
 {
 	t_simulation	*simulation;
 
+	//ft_check_arguments(ac,av);
 	simulation = (t_simulation *)malloc(sizeof(t_simulation));
+	if (!simulation)
+		return (NULL);
 	simulation->number_of_philos = ft_atoi(av[1]);
 	simulation->forks = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t)
 			* simulation->number_of_philos);
+	if (!simulation->forks)
+		return (NULL);
 	simulation->time_to_die = ft_atoi(av[2]);
 	simulation->time_to_eat = ft_atoi(av[3]);
 	simulation->time_to_sleep = ft_atoi(av[4]);

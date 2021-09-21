@@ -6,7 +6,7 @@
 /*   By: zjamali <zjamali@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/17 17:54:01 by zjamali           #+#    #+#             */
-/*   Updated: 2021/09/20 16:46:19 by zjamali          ###   ########.fr       */
+/*   Updated: 2021/09/21 11:29:04 by zjamali          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,4 +90,8 @@ void			print_to_terminal(char *output, t_simulation *simulation,
 */
 t_philo			*init_simaulation_philos(t_simulation *simulation);
 
+/*
+*
+*/
+int				handle_errors(void);
 #endif

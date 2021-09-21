@@ -6,7 +6,7 @@
 /*   By: zjamali <zjamali@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/20 08:53:25 by zjamali           #+#    #+#             */
-/*   Updated: 2021/09/20 15:40:44 by zjamali          ###   ########.fr       */
+/*   Updated: 2021/09/21 11:01:20 by zjamali          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ void	*watch_philo_routine(void *philo_data)
 	simulation = philo->simulation;
 	while (1)
 	{
+		pthread_mutex_lock(&philo->is_eating);
 		if (simulation->is_times_to_eat)
 			if (simulation->eating_times_for_all_philos == 0)
 				pthread_mutex_unlock(&simulation->main_lock);
@@ -29,6 +30,7 @@ void	*watch_philo_routine(void *philo_data)
 			print_to_terminal("\033[0;31m DIE \033[0m\n", simulation,
 				philo->philo_id, 1);
 		}
+		pthread_mutex_unlock(&philo->is_eating);
 		usleep(500);
 	}
 	return (NULL);

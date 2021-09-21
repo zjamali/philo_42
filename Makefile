@@ -10,7 +10,8 @@ SRC_NAME = main.c\
 	parse.c\
 	philo_routine.c\
 	philo_watcher.c\
-	ft_atoi.c
+	ft_atoi.c\
+	handle_errors.c
 
 OBJ_NAME = $(SRC_NAME:.c=.o)
 HEDAERS = headers/philosopher.h

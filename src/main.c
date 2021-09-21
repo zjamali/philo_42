@@ -6,7 +6,7 @@
 /*   By: zjamali <zjamali@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/13 14:12:21 by zjamali           #+#    #+#             */
-/*   Updated: 2021/09/20 17:56:47 by zjamali          ###   ########.fr       */
+/*   Updated: 2021/09/21 11:47:36 by zjamali          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,10 +70,16 @@ int	main(int ac, char **av)
 	if (ac >= 5 && check_args(ac, av))
 	{
 		simulation = ft_parse_args(ac, av);
+		if (!simulation)
+			return (handle_errors());
 		pthread_mutex_init(&simulation->message, NULL);
 		philos_data = init_simaulation_philos(simulation);
+		if (!philos_data)
+			return (handle_errors());
 		philos_threads = (pthread_t *)malloc(sizeof(pthread_t)
 				* simulation->number_of_philos);
+		if (!philos_threads)
+			return (handle_errors());
 		while (i < simulation->number_of_philos)
 		{
 			philos_data[i].limit = get_current_time() + simulation->time_to_die;
@@ -85,5 +91,7 @@ int	main(int ac, char **av)
 		}
 		destroy_simulation(simulation, philos_data, philos_threads);
 	}
+	else
+		return (1);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: zjamali <zjamali@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/20 09:05:04 by zjamali           #+#    #+#             */
-/*   Updated: 2021/09/20 15:25:43 by zjamali          ###   ########.fr       */
+/*   Updated: 2021/09/21 11:24:54 by zjamali          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,13 @@ t_philo	*init_simaulation_philos(t_simulation *simulation)
 	i = 0;
 	philos_data = (t_philo *)malloc(sizeof(t_philo)
 			* simulation->number_of_philos);
+	if (!philos_data)
+		return (NULL);
 	init_simulation_mutex(simulation);
 	while (i < simulation->number_of_philos)
 	{
 		pthread_mutex_init(&simulation->forks[i], NULL);
+		pthread_mutex_init(&philos_data[i].is_eating, NULL);
 		philos_data[i].philo_id = i + 1;
 		philos_data[i].time_to_die = simulation->time_to_die;
 		philos_data[i].time_to_eat = simulation->time_to_eat;
