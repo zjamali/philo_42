@@ -6,11 +6,11 @@
 /*   By: zjamali <zjamali@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/20 08:53:25 by zjamali           #+#    #+#             */
-/*   Updated: 2021/09/21 13:46:12 by zjamali          ###   ########.fr       */
+/*   Updated: 2021/09/22 18:22:35 by zjamali          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../headers/philosopher.h"
+#include "../../headers/philosopher.h"
 
 void	*watch_philo_routine(void *philo_data)
 {

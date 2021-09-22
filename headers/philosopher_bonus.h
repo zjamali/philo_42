@@ -6,7 +6,7 @@
 /*   By: zjamali <zjamali@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/17 17:54:01 by zjamali           #+#    #+#             */
-/*   Updated: 2021/09/22 16:21:08 by zjamali          ###   ########.fr       */
+/*   Updated: 2021/09/22 18:51:10 by zjamali          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ typedef struct s_simulation
 	sem_t			*forks;
 	sem_t			*message;
 	sem_t			*main_lock;
+	sem_t			*eating_times_count;
 	int				*pid;
 }	t_simulation;
 typedef struct s_philo_data
@@ -72,6 +73,10 @@ t_simulation	*ft_parse_args(int ac, char **av);
 */
 void			*watch_philo_routine(void *philo_data);
 
+/*
+* thread watching eating times
+*/
+void	watch_eating_times(t_simulation *simulation);
 /*
 *	phlo routine 
 */
