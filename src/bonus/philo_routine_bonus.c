@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   philo_routine.c                                    :+:      :+:    :+:   */
+/*   philo_routine_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: zjamali <zjamali@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/20 08:52:24 by zjamali           #+#    #+#             */
-/*   Updated: 2021/09/21 13:39:22 by zjamali          ###   ########.fr       */
+/*   Updated: 2021/09/22 16:21:24 by zjamali          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../headers/philosopher.h"
+#include "../../headers/philosopher_bonus.h"
 
 void	philo_taken_forks(t_philo *current_philo)
 {
@@ -19,10 +19,9 @@ void	philo_taken_forks(t_philo *current_philo)
 
 	philo = current_philo;
 	simulation = philo->simulation;
-	pthread_mutex_lock(&simulation->forks[philo->philo_id - 1]);
+	sem_wait(simulation->forks);
 	print_to_terminal("\thas taken fork\n", simulation, philo->philo_id, 0);
-	pthread_mutex_lock(
-		&simulation->forks[philo->philo_id % simulation->number_of_philos]);
+	sem_wait(simulation->forks);
 	print_to_terminal("\thas taken fork\n", simulation, philo->philo_id, 0);
 }
 
@@ -33,14 +32,14 @@ void	philo_is_eating(t_philo *current_philo)
 
 	philo = current_philo;
 	simulation = philo->simulation;
-	pthread_mutex_lock(&philo->is_eating);
+	sem_wait(philo->is_eating);
 	print_to_terminal("\tis\033[0;32m eating\033[0m\n", simulation,
 		philo->philo_id, 0);
 	if (simulation->is_times_to_eat)
 		simulation->eating_times_for_all_philos--;
 	philo->limit = get_current_time() + philo->time_to_die;
 	usleep(philo->time_to_eat * 1000);
-	pthread_mutex_unlock(&philo->is_eating);
+	sem_post(philo->is_eating);
 }
 
 void	philo_start_sleeping(t_philo *current_philo)
@@ -50,9 +49,8 @@ void	philo_start_sleeping(t_philo *current_philo)
 
 	philo = current_philo;
 	simulation = philo->simulation;
-	pthread_mutex_unlock(&simulation->forks[philo->philo_id - 1]);
-	pthread_mutex_unlock(
-		&simulation->forks[philo->philo_id % simulation->number_of_philos]);
+	sem_post(simulation->forks);
+	sem_post(simulation->forks);
 	print_to_terminal("\tis\e[0;35m sleeping\033[0m\n", simulation,
 		philo->philo_id, 0);
 	usleep(philo->time_to_sleep * 1000);
@@ -69,7 +67,7 @@ void	philo_start_thinking(t_philo *current_philo)
 		philo->philo_id, 0);
 }
 
-void	*philo_routine(void *philo_data)
+void	*philo_routine(t_philo *philo_data)
 {
 	pthread_t		philo_watcher;
 	t_philo			*philo;
