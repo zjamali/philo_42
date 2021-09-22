@@ -1,6 +1,7 @@
 NAME = philo
 BONUS = philo_bonus
 
+OBJ_DIR = ./obj
 SRC_MANDATORY_DIR = ./src/mandatory/
 OBJ_MANDATORY_DIR = ./obj/mandatory/
 
@@ -67,10 +68,10 @@ $(BONUS): $(OBJ_BONUS) $(OBJ_COMMUN)
 	$(CC) $^ -lpthread -o $@
 
 clean:
-	rm -rf $(OBJ_DIR)/*.o
 	rm -rf $(OBJ_DIR)
 
 fclean: clean
 	rm -rf $(NAME)
+	rm -rf $(BONUS)
 
 re: fclean all
