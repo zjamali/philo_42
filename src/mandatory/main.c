@@ -6,7 +6,7 @@
 /*   By: zjamali <zjamali@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/13 14:12:21 by zjamali           #+#    #+#             */
-/*   Updated: 2021/09/22 10:17:01 by zjamali          ###   ########.fr       */
+/*   Updated: 2021/09/22 17:45:44 by zjamali          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,10 @@ int	main(int ac, char **av)
 		pthread_mutex_init(&simulation->message, NULL);
 		philos_data = init_simaulation_philos(simulation);
 		if (!philos_data)
+		{
+			free(simulation);
 			return (handle_errors());
+		}
 		return (create_detach_threads(philos_data, simulation));
 	}
 	else

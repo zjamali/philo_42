@@ -6,7 +6,7 @@
 /*   By: zjamali <zjamali@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/13 14:12:21 by zjamali           #+#    #+#             */
-/*   Updated: 2021/09/22 16:54:32 by zjamali          ###   ########.fr       */
+/*   Updated: 2021/09/22 17:45:19 by zjamali          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,11 +50,12 @@ void	destroy_simulation(t_simulation *simulation, t_philo *philos_data)
 		kill(simulation->pid[i], SIGKILL);
 		i++;
 	}
+	printf("wewewewe\n");
 	sem_close(simulation->forks);
 	sem_close(simulation->main_lock);
 	free(simulation->pid);
-	free(philos_data);
 	free(simulation);
+	free(philos_data);
 }
 
 int	create_philosophers(t_philo *philos_data, t_simulation *simulation)
@@ -90,10 +91,15 @@ int	main(int ac, char **av)
 	{
 		simulation = ft_parse_args(ac, av);
 		if (!simulation)
+		{
 			return (handle_errors());
+		}
 		philos_data = init_simaulation_philos(simulation);
 		if (!philos_data)
+		{
+			free(simulation);
 			return (handle_errors());
+		}
 		return (create_philosophers(philos_data, simulation));
 	}
 	else

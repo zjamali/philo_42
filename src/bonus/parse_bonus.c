@@ -6,7 +6,7 @@
 /*   By: zjamali <zjamali@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/20 08:47:01 by zjamali           #+#    #+#             */
-/*   Updated: 2021/09/22 12:34:43 by zjamali          ###   ########.fr       */
+/*   Updated: 2021/09/22 17:43:48 by zjamali          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,6 @@ t_simulation	*ft_parse_args(int ac, char **av)
 	if (!simulation)
 		return (NULL);
 	simulation->number_of_philos = ft_atoi(av[1]);
-	if (!simulation->forks)
-		return (NULL);
 	simulation->time_to_die = ft_atoi(av[2]);
 	simulation->time_to_eat = ft_atoi(av[3]);
 	simulation->time_to_sleep = ft_atoi(av[4]);
