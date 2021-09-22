@@ -6,7 +6,7 @@
 /*   By: zjamali <zjamali@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/13 14:12:21 by zjamali           #+#    #+#             */
-/*   Updated: 2021/09/22 17:45:19 by zjamali          ###   ########.fr       */
+/*   Updated: 2021/09/22 18:15:06 by zjamali          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,6 @@ void	destroy_simulation(t_simulation *simulation, t_philo *philos_data)
 		kill(simulation->pid[i], SIGKILL);
 		i++;
 	}
-	printf("wewewewe\n");
 	sem_close(simulation->forks);
 	sem_close(simulation->main_lock);
 	free(simulation->pid);
