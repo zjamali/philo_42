@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   main_bonus.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: zjamali <zjamali@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/13 14:12:21 by zjamali           #+#    #+#             */
-/*   Updated: 2021/09/20 16:53:19 by zjamali          ###   ########.fr       */
+/*   Updated: 2021/09/23 09:44:47 by zjamali          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../headers/philosopher.h"
+#include "../../headers/philosopher_bonus.h"
 
 long	get_current_time(void)
 {
@@ -23,67 +23,92 @@ long	get_current_time(void)
 void	print_to_terminal(char *output, t_simulation *simulation, int philo_id,
 					   int is_philo_die)
 {
-	pthread_mutex_lock(&simulation->message);
+	sem_wait(simulation->message);
 	if (is_philo_die)
 	{
 		printf("%ld\t%d%s", get_current_time() - simulation->start_time,
 			philo_id, output);
-		pthread_mutex_unlock(&simulation->main_lock);
+		sem_post(simulation->main_lock);
 	}
 	else
 	{
 		printf("%ld\t%d%s", get_current_time() - simulation->start_time,
 			philo_id, output);
-		pthread_mutex_unlock(&simulation->message);
+		sem_post(simulation->message);
 	}
 }
 
-void	destroy_simulation(t_simulation *simulation, t_philo *philos_data,
-		pthread_t *philos_threads)
+void	destroy_simulation(t_simulation *simulation, t_philo *philos_data)
 {
 	int		i;
 
+	sem_wait(simulation->main_lock);
+	sem_post(simulation->main_lock);
 	i = 0;
-	pthread_mutex_lock(&simulation->main_lock);
-	pthread_mutex_unlock(&simulation->main_lock);
-	free(philos_threads);
 	while (i < simulation->number_of_philos)
 	{
-		pthread_mutex_destroy(&simulation->forks[i]);
-		free(simulation->forks);
+		kill(simulation->pid[i], SIGKILL);
 		i++;
 	}
-	pthread_mutex_destroy(&simulation->main_lock);
-	pthread_mutex_destroy(&simulation->message);
+	sem_close(simulation->forks);
+	sem_close(simulation->main_lock);
+	free(simulation->pid);
 	free(simulation);
 	free(philos_data);
+}
+
+int	create_philosophers(t_philo *philos_data, t_simulation *simulation)
+{
+	int				i;
+	pthread_t		eating_times_watcher;
+
+	i = 0;
+	if (simulation->is_times_to_eat)
+	{
+		pthread_create(&eating_times_watcher, NULL,
+			watch_eating_times, simulation);
+		pthread_detach(eating_times_watcher);
+	}
+	while (i < simulation->number_of_philos)
+	{
+		simulation->pid[i] = fork();
+		if (!simulation->pid[i])
+		{
+			sem_unlink("is_eating");
+			philos_data[i].is_eating = sem_open("is_eating", O_CREAT, 0644, 1);
+			philos_data[i].limit = get_current_time() + simulation->time_to_die;
+			philo_routine(&philos_data[i]);
+		}
+		i++;
+		usleep(100);
+	}
+	destroy_simulation(simulation, philos_data);
+	return (0);
 }
 
 int	main(int ac, char **av)
 {
 	int				i;
 	t_simulation	*simulation;
-	pthread_t		*philos_threads;
 	t_philo			*philos_data;
 
 	i = 0;
-	if (ac >= 5 && check_args(ac, av))
+	if (check_args(ac, av))
 	{
 		simulation = ft_parse_args(ac, av);
-		pthread_mutex_init(&simulation->message, NULL);
-		philos_data = init_simaulation_philos(simulation);
-		philos_threads = (pthread_t *)malloc(sizeof(pthread_t)
-				* simulation->number_of_philos);
-		while (i < simulation->number_of_philos)
+		if (!simulation)
 		{
-			philos_data[i].limit = get_current_time() + simulation->time_to_die;
-			pthread_create(&philos_threads[i], NULL,
-				philo_routine, (void*)&philos_data[i]);
-			pthread_detach(philos_threads[i]);
-			i++;
-			usleep(100);
+			return (handle_errors());
 		}
-		destroy_simulation(simulation, philos_data, philos_threads);
+		philos_data = init_simaulation_philos(simulation);
+		if (!philos_data)
+		{
+			free(simulation);
+			return (handle_errors());
+		}
+		return (create_philosophers(philos_data, simulation));
 	}
+	else
+		return (1);
 	return (0);
 }

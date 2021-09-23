@@ -1,22 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   philosopher.h                                      :+:      :+:    :+:   */
+/*   philosopher_bonus.h                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: zjamali <zjamali@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/17 17:54:01 by zjamali           #+#    #+#             */
-/*   Updated: 2021/09/21 15:53:42 by zjamali          ###   ########.fr       */
+/*   Updated: 2021/09/23 08:52:34 by zjamali          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PHILOSOPHER_H
-# define PHILOSOPHER_H
+#ifndef PHILOSOPHER_BONUS_H
+# define PHILOSOPHER_BONUS_H
 # include <pthread.h>
 # include <stdio.h>
 # include <unistd.h>
 # include <sys/time.h>
 # include <stdlib.h>
+# include <semaphore.h>
+# include <signal.h>
 
 # define INT_MAX 2147483647
 # define INT_MIN -2147483648
@@ -33,9 +35,11 @@ typedef struct s_simulation
 	int				time_to_sleep;
 	int				is_times_to_eat;
 
-	pthread_mutex_t	*forks;
-	pthread_mutex_t	message;
-	pthread_mutex_t	main_lock;
+	sem_t			*forks;
+	sem_t			*message;
+	sem_t			*main_lock;
+	sem_t			*eating_times_count;
+	int				*pid;
 }	t_simulation;
 typedef struct s_philo_data
 {
@@ -50,7 +54,7 @@ typedef struct s_philo_data
 
 	long			limit;
 	t_simulation	*simulation;
-	pthread_mutex_t	is_eating;
+	sem_t			*is_eating;
 }	t_philo;
 
 /*
@@ -70,9 +74,13 @@ t_simulation	*ft_parse_args(int ac, char **av);
 void			*watch_philo_routine(void *philo_data);
 
 /*
+* thread watching eating times
+*/
+void			*watch_eating_times(void *simulation);
+/*
 *	phlo routine 
 */
-void			*philo_routine(void *philo_data);
+void			*philo_routine(t_philo *philo_data);
 
 /*
 *
