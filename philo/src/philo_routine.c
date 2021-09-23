@@ -6,7 +6,7 @@
 /*   By: zjamali <zjamali@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/20 08:52:24 by zjamali           #+#    #+#             */
-/*   Updated: 2021/09/23 10:22:38 by zjamali          ###   ########.fr       */
+/*   Updated: 2021/09/23 13:28:01 by zjamali          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,10 @@ void	philo_taken_forks(t_philo *current_philo)
 	philo = current_philo;
 	simulation = philo->simulation;
 	pthread_mutex_lock(&simulation->forks[philo->philo_id - 1]);
-	print_to_terminal("\thas taken fork\n", simulation, philo->philo_id, 0);
+	print_to_terminal("\thas taken a fork\n", simulation, philo->philo_id, 0);
 	pthread_mutex_lock(
 		&simulation->forks[philo->philo_id % simulation->number_of_philos]);
-	print_to_terminal("\thas taken fork\n", simulation, philo->philo_id, 0);
+	print_to_terminal("\thas taken a fork\n", simulation, philo->philo_id, 0);
 }
 
 void	philo_is_eating(t_philo *current_philo)
