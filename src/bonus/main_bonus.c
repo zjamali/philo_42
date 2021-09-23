@@ -6,7 +6,7 @@
 /*   By: zjamali <zjamali@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/13 14:12:21 by zjamali           #+#    #+#             */
-/*   Updated: 2021/09/22 19:01:19 by zjamali          ###   ########.fr       */
+/*   Updated: 2021/09/23 09:22:32 by zjamali          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,8 +60,15 @@ void	destroy_simulation(t_simulation *simulation, t_philo *philos_data)
 int	create_philosophers(t_philo *philos_data, t_simulation *simulation)
 {
 	int				i;
+	pthread_t		eating_times_watcher;
 
 	i = 0;
+	if (simulation->is_times_to_eat)
+	{
+		pthread_create(&eating_times_watcher, NULL,
+			watch_eating_times, simulation);
+		pthread_detach(eating_times_watcher);
+	}
 	while (i < simulation->number_of_philos)
 	{
 		simulation->pid[i] = fork();
@@ -75,8 +82,6 @@ int	create_philosophers(t_philo *philos_data, t_simulation *simulation)
 		i++;
 		usleep(100);
 	}
-	if (simulation->is_times_to_eat)
-		watch_eating_times(simulation);
 	destroy_simulation(simulation, philos_data);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: zjamali <zjamali@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/20 08:52:24 by zjamali           #+#    #+#             */
-/*   Updated: 2021/09/22 19:01:45 by zjamali          ###   ########.fr       */
+/*   Updated: 2021/09/23 09:14:24 by zjamali          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	philo_is_eating(t_philo *current_philo)
 	print_to_terminal("\tis\033[0;32m eating\033[0m\n", simulation,
 		philo->philo_id, 0);
 	if (simulation->is_times_to_eat)
-		sem_wait(simulation->eating_times_count);
+		sem_post(simulation->eating_times_count);
 	philo->limit = get_current_time() + philo->time_to_die;
 	usleep(philo->time_to_eat * 1000);
 	sem_post(philo->is_eating);

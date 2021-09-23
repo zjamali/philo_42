@@ -6,7 +6,7 @@
 /*   By: zjamali <zjamali@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/20 09:05:04 by zjamali           #+#    #+#             */
-/*   Updated: 2021/09/22 18:56:14 by zjamali          ###   ########.fr       */
+/*   Updated: 2021/09/23 09:12:05 by zjamali          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	init_simulation_semaphores(t_simulation *simulation)
 	if (simulation->is_times_to_eat)
 	{
 		simulation->eating_times_count = sem_open("eating_times",
-				O_CREAT, 0644, simulation->eating_times_for_all_philos);
+				O_CREAT, 0644, 0);
 	}
 }
 

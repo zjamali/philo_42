@@ -6,7 +6,7 @@
 /*   By: zjamali <zjamali@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/17 17:54:01 by zjamali           #+#    #+#             */
-/*   Updated: 2021/09/22 18:51:10 by zjamali          ###   ########.fr       */
+/*   Updated: 2021/09/23 08:52:34 by zjamali          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ void			*watch_philo_routine(void *philo_data);
 /*
 * thread watching eating times
 */
-void	watch_eating_times(t_simulation *simulation);
+void			*watch_eating_times(void *simulation);
 /*
 *	phlo routine 
 */
