@@ -6,7 +6,7 @@
 /*   By: zjamali <zjamali@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/21 16:33:13 by zjamali           #+#    #+#             */
-/*   Updated: 2021/09/22 10:15:32 by zjamali          ###   ########.fr       */
+/*   Updated: 2021/09/23 10:06:43 by zjamali          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,11 @@ int	check_arguments_options(int num, int ac)
 	if (ac == 1 && num > 200)
 	{
 		printf("error: number of philosopher must be less than 200\n");
+		return (1);
+	}
+	if (ac == 1 && num == 0)
+	{
+		printf("error: number of philosopher must be more than zero\n");
 		return (1);
 	}
 	if (num < 60 && ac > 1 && ac < 5)
