@@ -6,7 +6,7 @@
 /*   By: zjamali <zjamali@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/20 08:53:25 by zjamali           #+#    #+#             */
-/*   Updated: 2021/09/23 10:29:37 by zjamali          ###   ########.fr       */
+/*   Updated: 2021/09/24 11:06:12 by zjamali          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	*watch_eating_times(void *simulation_data)
 	{
 		sem_wait(simulation->eating_times_count);
 		counter++;
-		if (counter == simulation->eating_times_for_all_philos)
+		if (counter == simulation->number_of_philos)
 			sem_post(simulation->main_lock);
 		usleep(500);
 	}

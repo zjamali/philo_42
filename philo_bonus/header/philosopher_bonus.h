@@ -6,7 +6,7 @@
 /*   By: zjamali <zjamali@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/17 17:54:01 by zjamali           #+#    #+#             */
-/*   Updated: 2021/09/23 08:52:34 by zjamali          ###   ########.fr       */
+/*   Updated: 2021/09/24 12:32:31 by zjamali          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@
 typedef struct s_simulation
 {
 	int				number_of_philos;
-	int				eating_times_for_all_philos;
 	long			start_time;
 
 	int				time_to_die;

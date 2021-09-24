@@ -6,7 +6,7 @@
 /*   By: zjamali <zjamali@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/13 14:12:21 by zjamali           #+#    #+#             */
-/*   Updated: 2021/09/23 11:29:16 by zjamali          ###   ########.fr       */
+/*   Updated: 2021/09/24 12:27:46 by zjamali          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,6 @@ void	destroy_simulation(t_simulation *simulation, t_philo *philos_data)
 	int		i;
 
 	sem_wait(simulation->main_lock);
-	sem_post(simulation->main_lock);
 	i = 0;
 	while (i < simulation->number_of_philos)
 	{
@@ -57,7 +56,7 @@ void	destroy_simulation(t_simulation *simulation, t_philo *philos_data)
 	free(philos_data);
 }
 
-int	create_philosophers(t_philo *philos_data, t_simulation *simulation)
+void	create_philosophers(t_philo *philos_data, t_simulation *simulation)
 {
 	int				i;
 	pthread_t		eating_times_watcher;
@@ -75,15 +74,15 @@ int	create_philosophers(t_philo *philos_data, t_simulation *simulation)
 		if (!simulation->pid[i])
 		{
 			sem_unlink("is_eating");
-			philos_data[i].is_eating = sem_open("is_eating", O_CREAT, 0644, 1);
+			philos_data[i].is_eating = sem_open("is_eating", O_CREAT, 644, 1);
 			philos_data[i].limit = get_current_time() + simulation->time_to_die;
 			philo_routine(&philos_data[i]);
+			exit (0);
 		}
 		i++;
 		usleep(100);
 	}
 	destroy_simulation(simulation, philos_data);
-	return (0);
 }
 
 int	main(int ac, char **av)
@@ -106,7 +105,8 @@ int	main(int ac, char **av)
 			free(simulation);
 			return (handle_errors());
 		}
-		return (create_philosophers(philos_data, simulation));
+		create_philosophers(philos_data, simulation);
+		return (0);
 	}
 	else
 		return (1);
