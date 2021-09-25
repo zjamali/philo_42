@@ -2,7 +2,7 @@
 In this repository u will see he basics of threading a process and how to work on the same memory space
 
 
-# What is MultiThreads?
+# What is MultiThreads ?
 
     Multithreading is a specialized form of multitasking
     and a multitasking is the feature that allows your computer 
@@ -11,7 +11,7 @@ In this repository u will see he basics of threading a process and how to work o
     
 <a href="https://ibb.co/G2DdpGx"><img src="https://i.ibb.co/BZJf3vz/Screen-Shot-2021-05-20-at-9-41-36-PM.png" alt="Screen-Shot-2021-05-20-at-9-41-36-PM" border="0"></a><br />
     
- # What Are Threads?
+ # What Are Threads ?
     A thread is a small sequence of programmed instructions.
     Threads refer to the highest level of code your processor can execute.
   
