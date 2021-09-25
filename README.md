@@ -22,12 +22,12 @@ In this repository u will see he basics of threading a process and how to work o
     When the second code block attempts access, it sees that the mutex is set and waits until the first block of code is complete (and unsets the mutex),
     then  continues.
  
- # What is semaphores
+ # What is semaphores ?
  
     Semaphore is simply a variable that is non-negative and shared between threads. 
     This variable is used to solve the critical section problem and to achieve process synchronization in the multiprocessing environment. 
 
-## usefull resources
+# Usefull Resources
 https://medium.com/swlh/the-dining-philosophers-problem-bbdb92e6b788 <br>
 https://www.youtube.com/watch?v=d9s_d28yJq0&list=PLfqABt5AS4FmuQf70psXrsMLEDQXNkLq2 <br>
 https://osandnetworkingcslab.wordpress.com/implementation-of-dining-philosophers-using-threads/
